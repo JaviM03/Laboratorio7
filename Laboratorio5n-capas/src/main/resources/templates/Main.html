@@ -7,6 +7,7 @@
 <body>
  	<table>
 		<thead>
+			<th>ID</th>
 			<th>Nombre</th>
 			<th>Apellido</th>
 			<th>Edad</th>
@@ -22,20 +23,32 @@
 				</tr>
 			</th:block>
 	</table>
-	<br>
-	<form th:action="@{/mostrarEstudiante}" method="post">
-		<label>Buscar por codigo de estudiante</label><input type="number" name="codigo"><br>
-		<input type="submit" value="Buscar">
-	</form>
+	 <br>
+    <form th:action="@{/busqueda}" method="POST">
+        <label>Ingresar codigo de estudiante: </label>
+        <input type="number" name="codigo">
+        <br>
+        <button type="submit" name="action" value="borrar">Borrar</button><br>
+        <button type="submit" name="action" value="actualizar">Actualizar</button><br>
+        <button type="submit" name="action" value="buscar">Buscar</button><br>
+    </form>
+    
+    <br>
+    <form th:action="@{/insertarEstudiante}">
+        <input type="submit" value="Insertar nuevo estudiante">
+    </form>
+    <br>
 	
-	<form th:action="@{/insertarEstudiante}">
-		<input type="submit" value ="Insertar nuevo estudiante">
+	<form th:action="@{/filtrar}" method="post">
+	<Label>Ingrese la cadena por la que quiere filtrar</Label>
+	<input type="text" name="nombre">
+		<input type="submit" value ="Filtrar">
 	</form><br>
-	<form th:action="@{/borrarEstudiante}" method ="post">
-		<label> Borrar estudiante por codigo: </label> <input type="number" name ="codigo"/><br>
-		<input type="submit" value="Borrar"/>
-	</form>
- 
+	
+	
+ <form th:action="@{/estudiante}" method="post">
+ <input type="submit" value="HOME">
+ </form>
  
 
 <!--   <form th:action ="@{/mostrarEstudiante}" method="post">

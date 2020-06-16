@@ -10,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -63,25 +64,26 @@ public class MainController {
 			}
 			mav.addObject("estudiantes",estudiantes);
 			mav.setViewName("listaEstudiantes");
-		}
+	}
 		return mav;
 	}
 	
-	@RequestMapping(value ="/borrarEstudiante", method=RequestMethod.POST)
+	@RequestMapping(value="/busqueda", params="action=borrar")
 	public ModelAndView delete(@RequestParam(value="codigo") int id) {
-		ModelAndView mav=new ModelAndView();
-		List<Estudiante> estudiantes =null;
+		ModelAndView mav = new ModelAndView();
+		List<Estudiante> estudiantes = null;
+		
 		try {
 			estudianteService.delete(id);
-			estudiantes=estudianteService.findAll();
-		} catch (Exception e){
+			estudiantes = estudianteService.findAll();
+		}catch(Exception e) {
 			e.printStackTrace();
 		}
-		mav.addObject("estudiantes",estudiantes);
+		mav.addObject("estudiantes", estudiantes);
 		mav.setViewName("main");
+		
 		return mav;
 	}
-	
 	@GetMapping("/insertarEstudiante")
 	public ModelAndView inicio() {
 		ModelAndView mav = new ModelAndView();
@@ -96,6 +98,56 @@ public class MainController {
 		mav.setViewName("main");
 		return mav;
 	}
-
+	
+	@PostMapping("/filtrar")
+	public ModelAndView filtrar(@RequestParam(value="nombre") String cadena) {
+		ModelAndView mav = new ModelAndView();
+		List<Estudiante> estudiantes=null;
+		
+			try {
+				estudiantes=estudianteService.filtrarPor(cadena);
+				//estudiantes=estudianteService.empiezaCon(cadena);
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+			mav.addObject("estudiantes",estudiantes);
+			mav.setViewName("main");
+		
+		return mav;
+	}
+	
+	@RequestMapping(value="/busqueda", params="action=actualizar")
+	public ModelAndView update(@RequestParam(value="codigo") int id) {
+		ModelAndView mav = new ModelAndView();
+		Estudiante estudiante = estudianteService.findOne(id);
+		mav.addObject("estudiante", estudiante);
+		mav.setViewName("actualizarEstudiante");
+		
+		return mav;
+	}
+	
+	@GetMapping("/actualizarEstudiante")
+	public ModelAndView initEstu(@RequestParam(value="codigo") int id) {
+		ModelAndView mav = new ModelAndView();
+		Estudiante estudiante = estudianteService.findOne(id);
+		mav.addObject("estudiante", new Estudiante());
+		mav.setViewName("actualizarEstudiante");
+		return mav;
+	}
+	@RequestMapping(value="/busqueda", params="action=buscar")
+	public ModelAndView buscar(@RequestParam(value="codigo") int id) {
+		ModelAndView mav = new ModelAndView();
+		Estudiante estudiante = null;
+		
+		try {
+			estudiante= estudianteService.findOne(id);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		mav.addObject("estudiante", estudiante);
+		mav.setViewName("estudiante");
+		
+		return mav;
+	}
 
 }
