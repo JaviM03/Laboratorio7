@@ -37,11 +37,11 @@ public class Estudiante {
 	
 	
 	@Column(name="edad")
-	private Integer edad;
+	private Integer Edad;
 	
 	
 	@Column(name="estado")
-	private Boolean estado;
+	private Boolean Estado;
 	
 	@OneToMany(mappedBy="estudiante",fetch=FetchType.EAGER)
 	private List<Computadora> computadoras;
@@ -73,22 +73,22 @@ public class Estudiante {
 		this.apellido = apellido;
 	}
 	public Integer getEdad() {
-		return edad;
+		return Edad;
 	}
 	public void setEdad(Integer edad) {
-		edad = edad;
+		Edad = edad;
 	}
 	public Boolean getEstado() {
-		return estado;
+		return Estado;
 	}
 	public void setEstado(Boolean estado) {
-		estado = estado;
+		Estado = estado;
 	}
 	
 	public String getEstadoDelegate() {
-		if(this.estado==null) return"";
+		if(this.Estado==null) return"";
 		else {
-			return estado == true?"Ativo":"Inactivo";
+			return Estado == true?"Ativo":"Inactivo";
 		}
 	}
 	

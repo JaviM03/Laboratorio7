@@ -126,14 +126,7 @@ public class MainController {
 		return mav;
 	}
 	
-	@GetMapping("/actualizarEstudiante")
-	public ModelAndView initEstu(@RequestParam(value="codigo") int id) {
-		ModelAndView mav = new ModelAndView();
-		Estudiante estudiante = estudianteService.findOne(id);
-		mav.addObject("estudiante", new Estudiante());
-		mav.setViewName("actualizarEstudiante");
-		return mav;
-	}
+
 	@RequestMapping(value="/busqueda", params="action=buscar")
 	public ModelAndView buscar(@RequestParam(value="codigo") int id) {
 		ModelAndView mav = new ModelAndView();
